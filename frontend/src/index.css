@@ -2,6 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: dark; }
-html, body, #root { height: 100%; }
-body { background: #0b0b0e; color: #fff; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+/* Base tweaks */
+@layer base {
+  :root {
+    color-scheme: dark;
+    --bg-deep: #0b0e16;
+    --bg-elev: #0f1320;
+    --ink: #f4f4f5;
+    --muted: #a1a1aa;
+    --gold: #f5d17a;
+    --rose: #f43f5e;
+    --sky:  #38bdf8;
+    --violet: #8b5cf6;
+  }
+  html, body {
+    @apply min-h-screen;
+    background: var(--bg-deep);
+    color: var(--ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+  .display {
+    font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
+    letter-spacing: 0.3px;
+  }
+}
+
+/* Reusable components that use @apply */
+@layer components {
+  .card { @apply rounded-3xl border border-white/10 bg-white/5 backdrop-blur; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold transition; }
+  .btn-primary { @apply shadow-lg; }
+  .btn-ghost { @apply border border-white/15 bg-white/5 hover:bg-white/10; }
+  .section { @apply space-y-6; }
+  .muted { color: var(--muted); }
+  main { @apply relative z-10; }
+}
+
+/* The rest (no @apply here so leave outside) */
+.bg-grid { /* … keep your background code … */ }
+
+/* ring-gradient block using standard + webkit masks (from earlier) */
+.ring-gradient { position: relative; }
+.ring-gradient::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+  background: linear-gradient(135deg, rgba(245,209,122,0.45), rgba(139,92,246,0.45), rgba(56,189,248,0.45));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+@supports not ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+  .ring-gradient::before { content: none; }
+  .ring-gradient { border: 1px solid rgba(255,255,255,0.08); }
+}

@@ -1,0 +1,14 @@
+{
+  // Use Tailwind’s language service instead of the built-in CSS validator
+  "css.validate": false,
+
+  // Make sure Tailwind works in JSX
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "javascriptreact": "javascriptreact",
+    "html": "html"
+  },
+
+  // Nice-to-haves
+  "editor.quickSuggestions": { "strings": true }
+}
